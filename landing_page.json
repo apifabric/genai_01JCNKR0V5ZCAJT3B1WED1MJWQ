@@ -1,0 +1,90 @@
+{
+    "name": "Dream Escapades",
+    "logo": {
+        "Type": "Logo",
+        "name": "Dream Escapades Logo",
+        "description": "A logo with a suitcase and an airplane, representing holiday planning and travel."
+    },
+    "sections": [
+        {
+            "title": "Your Dream Vacation Awaits",
+            "subtitle": "Tailor-made holidays just for you",
+            "name": "Hero Section",
+            "label": "Home",
+            "content": "**Unleash your wanderlust with our expert holiday planning services.** Whether you're looking for a relaxing getaway or an adventurous escape, Dream Escapades tailors your perfect vacation.",
+            "order": 1,
+            "Type": "Hero",
+            "images": [
+                {
+                    "Type": "Hero",
+                    "name": "Tropical Vacation",
+                    "description": "A mesmerizing view of a beach with palms and clear blue water."
+                }
+            ]
+        },
+        {
+            "title": "About Dream Escapades",
+            "subtitle": "Who We Are",
+            "name": "About Section",
+            "label": "About",
+            "content": "### Crafting Unforgettable Journeys  \nFor over a decade, Dream Escapades has been making travel dreams come true. Our passionate team excels in creating personalized holiday plans backed by years of experience and a love for exploration.",
+            "order": 2,
+            "Type": "About",
+            "images": [
+                {
+                    "Type": "Background",
+                    "name": "World Map",
+                    "description": "Detailed map of various travel destinations."
+                }
+            ]
+        },
+        {
+            "title": "Our Premier Services",
+            "subtitle": "",
+            "name": "Services Section",
+            "label": "Services",
+            "content": "- **Custom Holiday Packages**: Experience travel like never before with plans tailored just for you.  \n- **Airport Management & Flight Bookings**: Seamless bookings, efficient airport transfers, and passenger handling.  \n- **Local Activity Packages**: Explore local culture, adventures, and attractions with our exclusive packages.",
+            "order": 3,
+            "Type": "Services",
+            "images": [
+                {
+                    "Type": "CallToAction",
+                    "name": "Flight Booking",
+                    "description": "An image of an airplane taking off against a sunset."
+                }
+            ]
+        },
+        {
+            "title": "Traveler Reviews",
+            "subtitle": "Exploring the World Together",
+            "name": "Testimonials Section",
+            "label": "Testimonials",
+            "content": "#### Hear from Our Happy Travelers  \n> \"An unforgettable experience, thanks to Dream Escapades! Every detail was perfection.\" \u2014 Sarah Thompson  \n> \"The local excursions were top-notch. Highly recommend!\" \u2014 James Lee",
+            "order": 4,
+            "Type": "Testimonials",
+            "images": [
+                {
+                    "Type": "Testimonial",
+                    "name": "Sarah and James",
+                    "description": "Photos of satisfied travelers enjoying their vacation."
+                }
+            ]
+        },
+        {
+            "title": "Get in Touch",
+            "subtitle": "Start Planning Your Holiday Today",
+            "name": "Contact Section",
+            "label": "Contact",
+            "content": "### Contact Us  \n**Phone**: +1 234 567 890  \n**Email**: info@dreamescapades.com  \n**Visit Us**: 123 Holiday Drive, Suite 456, Travel City  \n*We're excited to help you plan your next great adventure!*",
+            "order": 5,
+            "Type": "Contact",
+            "images": [
+                {
+                    "Type": "Map",
+                    "name": "Office Location Map",
+                    "description": "A map highlighting the office location of Dream Escapades."
+                }
+            ]
+        }
+    ]
+}

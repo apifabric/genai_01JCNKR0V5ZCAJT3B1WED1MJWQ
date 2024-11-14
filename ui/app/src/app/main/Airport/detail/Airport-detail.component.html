@@ -1,0 +1,148 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Airport_form_edit" 
+        service="Airport" 
+        entity="Airport" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #city attr="city" label="city" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #country attr="country" label="country" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="FLIGHT-destination_airport_id">
+    <div layout-padding>
+      <o-table 
+        attr="FlightTable" 
+        service="Flight" 
+        entity="Flight" 
+        keys="id"
+        parent-keys="destination_airport_id:id"
+        columns="id;destination_airport_id;source_airport_id;departure_time;arrival_time"  
+        horizontal-scroll="yes"
+        detail-form-route="Flight" 
+        edit-form-route="Flight"
+        visible-columns="id;destination_airport_id;source_airport_id;departure_time;arrival_time"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="destination_airport_id" title="destination_airport_id">
+    <o-table-cell-renderer-service attr="destination_airport_id" 
+        service="Airport" entity="AirportType" columns="id;name"
+        parent-keys="id:destination_airport_id"
+        value-column="name" keys="destination_airport_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="source_airport_id" title="source_airport_id">
+    <o-table-cell-renderer-service attr="source_airport_id" 
+        service="Airport" entity="AirportType" columns="id;name"
+        parent-keys="id:source_airport_id"
+        value-column="name" keys="source_airport_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #departure_time attr="departure_time" title="departure_time" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #arrival_time attr="arrival_time" title="arrival_time" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="FLIGHT-source_airport_id">
+    <div layout-padding>
+      <o-table 
+        attr="FlightTable" 
+        service="Flight" 
+        entity="Flight" 
+        keys="id"
+        parent-keys="source_airport_id:id"
+        columns="id;destination_airport_id;source_airport_id;departure_time;arrival_time"  
+        horizontal-scroll="yes"
+        detail-form-route="Flight" 
+        edit-form-route="Flight"
+        visible-columns="id;destination_airport_id;source_airport_id;departure_time;arrival_time"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="destination_airport_id" title="destination_airport_id">
+    <o-table-cell-renderer-service attr="destination_airport_id" 
+        service="Airport" entity="AirportType" columns="id;name"
+        parent-keys="id:destination_airport_id"
+        value-column="name" keys="destination_airport_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="source_airport_id" title="source_airport_id">
+    <o-table-cell-renderer-service attr="source_airport_id" 
+        service="Airport" entity="AirportType" columns="id;name"
+        parent-keys="id:source_airport_id"
+        value-column="name" keys="source_airport_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #departure_time attr="departure_time" title="departure_time" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #arrival_time attr="arrival_time" title="arrival_time" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

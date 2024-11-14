@@ -1,0 +1,62 @@
+{
+    "models": [
+        {
+            "classname": "User",
+            "code": "class User(Base):\n    \"\"\"description: Stores details about users who plan holidays.\"\"\"\n    __tablename__ = 'user'\n    \n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    email = Column(String, nullable=False)\n    signup_date = Column(DateTime, default=datetime.utcnow)",
+            "description": "Stores details about users who plan holidays.",
+            "name": "User"
+        },
+        {
+            "classname": "Holiday",
+            "code": "class Holiday(Base):\n    \"\"\"description: Represents holiday plans.\"\"\"\n    __tablename__ = 'holiday'\n    \n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    start_date = Column(Date)\n    end_date = Column(Date)\n    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)",
+            "description": "Represents holiday plans.",
+            "name": "Holiday"
+        },
+        {
+            "classname": "Activity",
+            "code": "class Activity(Base):\n    \"\"\"description: Represents activities planned in a holiday.\"\"\"\n    __tablename__ = 'activity'\n    \n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    date = Column(Date)\n    holiday_id = Column(Integer, ForeignKey('holiday.id'), nullable=False)\n    review_id = Column(Integer, ForeignKey('review.id'))",
+            "description": "Represents activities planned in a holiday.",
+            "name": "Activity"
+        },
+        {
+            "classname": "Review",
+            "code": "class Review(Base):\n    \"\"\"description: Stores reviews for activities.\"\"\"\n    __tablename__ = 'review'\n    \n    id = Column(Integer, primary_key=True)\n    rating = Column(Integer)\n    comment = Column(String)\n    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)",
+            "description": "Stores reviews for activities.",
+            "name": "Review"
+        },
+        {
+            "classname": "Airport",
+            "code": "class Airport(Base):\n    \"\"\"description: Represents airports managed by the system.\"\"\"\n    __tablename__ = 'airport'\n    \n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    city = Column(String)\n    country = Column(String)",
+            "description": "Represents airports managed by the system.",
+            "name": "Airport"
+        },
+        {
+            "classname": "Flight",
+            "code": "class Flight(Base):\n    \"\"\"description: Represents flights departing or arriving at airports.\"\"\"\n    __tablename__ = 'flight'\n    \n    id = Column(Integer, primary_key=True)\n    departure_time = Column(DateTime)\n    arrival_time = Column(DateTime)\n    source_airport_id = Column(Integer, ForeignKey('airport.id'), nullable=False)\n    destination_airport_id = Column(Integer, ForeignKey('airport.id'), nullable=False)",
+            "description": "Represents flights departing or arriving at airports.",
+            "name": "Flight"
+        },
+        {
+            "classname": "Booking",
+            "code": "class Booking(Base):\n    \"\"\"description: Represents bookings for flights.\"\"\"\n    __tablename__ = 'booking'\n    \n    id = Column(Integer, primary_key=True)\n    booking_date = Column(DateTime, default=datetime.utcnow)\n    flight_id = Column(Integer, ForeignKey('flight.id'), nullable=False)\n    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)",
+            "description": "Represents bookings for flights.",
+            "name": "Booking"
+        },
+        {
+            "classname": "Passenger",
+            "code": "class Passenger(Base):\n    \"\"\"description: Represents passengers on a booked flight.\"\"\"\n    __tablename__ = 'passenger'\n    \n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    age = Column(Integer)\n    booking_id = Column(Integer, ForeignKey('booking.id'), nullable=False)",
+            "description": "Represents passengers on a booked flight.",
+            "name": "Passenger"
+        }
+    ],
+    "rules": [
+        {
+            "name": "Total Activity Reviews",
+            "description": "Counts the number of reviews associated with an activity.",
+            "use_case": "An activity's number of reviews.",
+            "code": "Rule.count(derive=Activity.review_count, as_count_of=Review)"
+        }
+    ],
+    "test_data": "# Test data for User\nuser1 = User(name=\"Alice Wonderland\", email=\"alice@example.com\", signup_date=date(2022, 5, 1))\nuser2 = User(name=\"Bob Builder\", email=\"bob@example.com\", signup_date=date(2021, 6, 10))\nuser3 = User(name=\"Charlie Chocolate\", email=\"charlie@example.com\", signup_date=date(2021, 8, 15))\nuser4 = User(name=\"Daisy Duke\", email=\"daisy@example.com\", signup_date=date(2023, 1, 20))\n\n# Test data for Holiday\nholiday1 = Holiday(name=\"Summer Escape\", start_date=date(2023, 7, 5), end_date=date(2023, 7, 15), user_id=1)\nholiday2 = Holiday(name=\"Winter Wonderland\", start_date=date(2023, 12, 5), end_date=None, user_id=2)\nholiday3 = Holiday(name=\"Spring Fling\", start_date=date(2023, 4, 10), end_date=date(2023, 4, 20), user_id=3)\nholiday4 = Holiday(name=\"Autumn Adventure\", start_date=date(2023, 10, 1), end_date=None, user_id=4)\n\n# Test data for Activity\nactivity1 = Activity(name=\"Beach Volleyball\", date=date(2023, 7, 7), holiday_id=1)\nactivity2 = Activity(name=\"Mountain Hiking\", date=date(2023, 12, 6), holiday_id=2)\nactivity3 = Activity(name=\"City Tour\", date=date(2023, 4, 12), holiday_id=3)\nactivity4 = Activity(name=\"Wine Tasting\", date=date(2023, 10, 3), holiday_id=4)\n\n# Test data for Review\nreview1 = Review(rating=5, comment=\"Amazing experience!\", user_id=1)\nreview2 = Review(rating=4, comment=\"Really fun.\", user_id=2)\nreview3 = Review(rating=3, comment=\"Good but could be better.\", user_id=1)\nreview4 = Review(rating=2, comment=\"Not as expected.\", user_id=3)\n\n# Test data for Airport\nairport1 = Airport(name=\"JFK International\", city=\"New York\", country=\"USA\")\nairport2 = Airport(name=\"Heathrow\", city=\"London\", country=\"UK\")\nairport3 = Airport(name=\"Changi\", city=\"Singapore\", country=\"Singapore\")\nairport4 = Airport(name=\"Dubai International\", city=\"Dubai\", country=\"UAE\")\n\n# Test data for Flight\nflight1 = Flight(departure_time=datetime(2023, 5, 1, 9, 0), arrival_time=datetime(2023, 5, 1, 12, 30), source_airport_id=1, destination_airport_id=2)\nflight2 = Flight(departure_time=datetime(2023, 5, 3, 15, 0), arrival_time=datetime(2023, 5, 3, 19, 0), source_airport_id=2, destination_airport_id=3)\nflight3 = Flight(departure_time=datetime(2023, 5, 5, 11, 0), arrival_time=datetime(2023, 5, 5, 15, 30), source_airport_id=3, destination_airport_id=4)\nflight4 = Flight(departure_time=datetime(2023, 5, 7, 22, 0), arrival_time=datetime(2023, 5, 8, 2, 0), source_airport_id=4, destination_airport_id=1)\n\n# Test data for Booking\nbooking1 = Booking(booking_date=datetime(2023, 4, 15), flight_id=1, user_id=1)\nbooking2 = Booking(booking_date=datetime(2023, 4, 16), flight_id=2, user_id=2)\nbooking3 = Booking(booking_date=datetime(2023, 4, 17), flight_id=3, user_id=3)\nbooking4 = Booking(booking_date=datetime(2023, 4, 18), flight_id=4, user_id=4)\n\n# Test data for Passenger\npassenger1 = Passenger(name=\"Elena Gilbert\", age=25, booking_id=1)\npassenger2 = Passenger(name=\"Damian Salvatore\", age=28, booking_id=2)\npassenger3 = Passenger(name=\"Stefan Salvatore\", age=27, booking_id=3)\npassenger4 = Passenger(name=\"Bonnie Bennett\", age=26, booking_id=4)\n",
+    "name": "HolidayPlannerAndAirportManager"
+}

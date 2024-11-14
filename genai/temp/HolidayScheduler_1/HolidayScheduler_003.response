@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "Destination",
+            "code": "class Destination(Base):\n    \"\"\"description: Represents a travel destination.\"\"\"\n    __tablename__ = 'destination'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    country = Column(String, nullable=False)\n    description = Column(Text)",
+            "description": "Represents a travel destination.",
+            "name": "Destination"
+        },
+        {
+            "classname": "Activity",
+            "code": "class Activity(Base):\n    \"\"\"description: Represents an activity available at a destination.\"\"\"\n    __tablename__ = 'activity'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    description = Column(Text)\n    destination_id = Column(Integer, ForeignKey('destination.id'))\n    price = Column(Integer)",
+            "description": "Represents an activity available at a destination.",
+            "name": "Activity"
+        },
+        {
+            "classname": "Review",
+            "code": "class Review(Base):\n    \"\"\"description: Represents a review for an activity.\"\"\"\n    __tablename__ = 'review'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    content = Column(Text)\n    rating = Column(Integer)\n    activity_id = Column(Integer, ForeignKey('activity.id'))\n    date = Column(DateTime)",
+            "description": "Represents a review for an activity.",
+            "name": "Review"
+        },
+        {
+            "classname": "Airport",
+            "code": "class Airport(Base):\n    \"\"\"description: Represents an airport entity.\"\"\"\n    __tablename__ = 'airport'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    city = Column(String, nullable=False)\n    country = Column(String, nullable=False)",
+            "description": "Represents an airport entity.",
+            "name": "Airport"
+        },
+        {
+            "classname": "Flight",
+            "code": "class Flight(Base):\n    \"\"\"description: Represents a flight between airports.\"\"\"\n    __tablename__ = 'flight'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    flight_number = Column(String, nullable=False)\n    origin_id = Column(Integer, ForeignKey('airport.id'), nullable=False)\n    destination_id = Column(Integer, ForeignKey('airport.id'), nullable=False)\n    departure_time = Column(DateTime)\n    arrival_time = Column(DateTime)",
+            "description": "Represents a flight between airports.",
+            "name": "Flight"
+        },
+        {
+            "classname": "Booking",
+            "code": "class Booking(Base):\n    \"\"\"description: Represents a flight booking made by a passenger.\"\"\"\n    __tablename__ = 'booking'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    passenger_id = Column(Integer, ForeignKey('passenger.id'), nullable=False)\n    flight_id = Column(Integer, ForeignKey('flight.id'), nullable=False)\n    booking_date = Column(DateTime)",
+            "description": "Represents a flight booking made by a passenger.",
+            "name": "Booking"
+        },
+        {
+            "classname": "Passenger",
+            "code": "class Passenger(Base):\n    \"\"\"description: Represents a passenger who uses the flight services.\"\"\"\n    __tablename__ = 'passenger'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    email = Column(String, nullable=False)",
+            "description": "Represents a passenger who uses the flight services.",
+            "name": "Passenger"
+        },
+        {
+            "classname": "Customer",
+            "code": "class Customer(Base):\n    \"\"\"description: Represents a customer involved in planning holidays.\"\"\"\n    __tablename__ = 'customer'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    email = Column(String, nullable=False)\n    phone_number = Column(String)",
+            "description": "Represents a customer involved in planning holidays.",
+            "name": "Customer"
+        },
+        {
+            "classname": "HolidayPackage",
+            "code": "class HolidayPackage(Base):\n    \"\"\"description: Represents a holiday package purchased by a customer.\"\"\"\n    __tablename__ = 'holiday_package'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    customer_id = Column(Integer, ForeignKey('customer.id'), nullable=False)\n    destination_id = Column(Integer, ForeignKey('destination.id'), nullable=False)\n    start_date = Column(Date)\n    end_date = Column(Date)",
+            "description": "Represents a holiday package purchased by a customer.",
+            "name": "HolidayPackage"
+        },
+        {
+            "classname": "PassengerFlightLink",
+            "code": "class PassengerFlightLink(Base):\n    \"\"\"description: Represents a junction table linking passengers and flights.\"\"\"\n    __tablename__ = 'passenger_flight_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    passenger_id = Column(Integer, ForeignKey('passenger.id'), nullable=False)\n    flight_id = Column(Integer, ForeignKey('flight.id'), nullable=False)",
+            "description": "Represents a junction table linking passengers and flights.",
+            "name": "PassengerFlightLink"
+        },
+        {
+            "classname": "ActivityBooking",
+            "code": "class ActivityBooking(Base):\n    \"\"\"description: Represents a booking of a particular activity by a customer during a holiday package.\"\"\"\n    __tablename__ = 'activity_booking'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    holiday_package_id = Column(Integer, ForeignKey('holiday_package.id'), nullable=False)\n    activity_id = Column(Integer, ForeignKey('activity.id'), nullable=False)\n    booking_date = Column(DateTime)",
+            "description": "Represents a booking of a particular activity by a customer during a holiday package.",
+            "name": "ActivityBooking"
+        },
+        {
+            "classname": "AirportManager",
+            "code": "class AirportManager(Base):\n    \"\"\"description: Represents management data for each airport.\"\"\"\n    __tablename__ = 'airport_manager'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    airport_id = Column(Integer, ForeignKey('airport.id'), nullable=False)\n    manager_name = Column(String, nullable=False)\n    contact_number = Column(String)\n    email = Column(String)",
+            "description": "Represents management data for each airport.",
+            "name": "AirportManager"
+        }
+    ],
+    "rules": [],
+    "test_data": "# Destinations Test Data\n\nfrom datetime import date, datetime\n\n# TestData for Destination\ndestination_1 = Destination(id=1, name=\"Paris\", country=\"France\", description=\"An iconic destination.\")\ndestination_2 = Destination(id=2, name=\"New York\", country=\"USA\", description=\"The city that never sleeps.\")\ndestination_3 = Destination(id=3, name=\"Tokyo\", country=\"Japan\", description=\"A bustling metropolis.\")\ndestination_4 = Destination(id=4, name=\"Sydney\", country=\"Australia\", description=\"The harbor city.\")\n\n# TestData for Activity\nactivity_1 = Activity(id=1, name=\"Eiffel Tower Visit\", description=\"Visit the iconic Eiffel Tower.\", destination_id=1, price=50)\nactivity_2 = Activity(id=2, name=\"Statue of Liberty Tour\", description=\"Tour the Statue of Liberty.\", destination_id=2, price=40)\nactivity_3 = Activity(id=3, name=\"Shinjuku Nightlife Tour\", description=\"Explore Shinjuku's nightlife.\", destination_id=3, price=70)\nactivity_4 = Activity(id=4, name=\"Sydney Opera House Tour\", description=\"Tour the Sydney Opera House.\", destination_id=4, price=60)\n\n# TestData for Review\nreview_1 = Review(id=1, content=\"Amazing experience!\",",
+    "name": "HolidayScheduler"
+}

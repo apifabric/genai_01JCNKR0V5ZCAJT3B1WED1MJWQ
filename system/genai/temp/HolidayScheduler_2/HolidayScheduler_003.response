@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "Holiday",
+            "code": "class Holiday(Base):\n    \"\"\"description: Represents a holiday plan.\"\"\"\n\n    __tablename__ = 'holiday'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    start_date = Column(Date, nullable=False)\n    end_date = Column(Date, nullable=False)\n    destination = Column(String, nullable=False)",
+            "description": "Represents a holiday plan.",
+            "name": "Holiday"
+        },
+        {
+            "classname": "Activity",
+            "code": "class Activity(Base):\n    \"\"\"description: Represents an activity within a holiday.\"\"\"\n\n    __tablename__ = 'activity'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    holiday_id = Column(Integer, ForeignKey('holiday.id'), nullable=False)\n    start_time = Column(DateTime, nullable=False)\n    end_time = Column(DateTime, nullable=False)\n    location = Column(String, nullable=False)",
+            "description": "Represents an activity within a holiday.",
+            "name": "Activity"
+        },
+        {
+            "classname": "Review",
+            "code": "class Review(Base):\n    \"\"\"description: Represents a review for an activity.\"\"\"\n\n    __tablename__ = 'review'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    activity_id = Column(Integer, ForeignKey('activity.id'), nullable=False)\n    review_text = Column(Text)\n    rating = Column(Integer)\n    review_date = Column(Date, nullable=False)",
+            "description": "Represents a review for an activity.",
+            "name": "Review"
+        },
+        {
+            "classname": "Airport",
+            "code": "class Airport(Base):\n    \"\"\"description: Represents an airport.\"\"\"\n\n    __tablename__ = 'airport'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    code = Column(String, nullable=False)\n    name = Column(String, nullable=False)\n    location = Column(String, nullable=False)",
+            "description": "Represents an airport.",
+            "name": "Airport"
+        },
+        {
+            "classname": "Flight",
+            "code": "class Flight(Base):\n    \"\"\"description: Represents a scheduled flight.\"\"\"\n\n    __tablename__ = 'flight'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    flight_number = Column(String, nullable=False)\n    departure_time = Column(DateTime, nullable=False)\n    arrival_time = Column(DateTime, nullable=False)\n    departure_airport_id = Column(Integer, ForeignKey('airport.id'), nullable=False)\n    arrival_airport_id = Column(Integer, ForeignKey('airport.id'), nullable=False)\n    total_seats = Column(Integer, nullable=False)",
+            "description": "Represents a scheduled flight.",
+            "name": "Flight"
+        },
+        {
+            "classname": "Booking",
+            "code": "class Booking(Base):\n    \"\"\"description: Represents a flight booking.\"\"\"\n\n    __tablename__ = 'booking'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    flight_id = Column(Integer, ForeignKey('flight.id'), nullable=False)\n    passenger_id = Column(Integer, ForeignKey('passenger.id'), nullable=False)\n    seat_number = Column(String, nullable=False)\n    booking_date = Column(Date, nullable=False)",
+            "description": "Represents a flight booking.",
+            "name": "Booking"
+        },
+        {
+            "classname": "Passenger",
+            "code": "class Passenger(Base):\n    \"\"\"description: Represents a flight passenger.\"\"\"\n\n    __tablename__ = 'passenger'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    date_of_birth = Column(Date, nullable=False)\n    passport_number = Column(String, nullable=False)\n    nationality = Column(String, nullable=False)",
+            "description": "Represents a flight passenger.",
+            "name": "Passenger"
+        },
+        {
+            "classname": "HolidayActivityLink",
+            "code": "class HolidayActivityLink(Base):\n    \"\"\"description: Represents a link between holidays and activities.\"\"\"\n\n    __tablename__ = 'holiday_activity_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    holiday_id = Column(Integer, ForeignKey('holiday.id'), nullable=False)\n    activity_id = Column(Integer, ForeignKey('activity.id'), nullable=False)",
+            "description": "Represents a link between holidays and activities.",
+            "name": "HolidayActivityLink"
+        },
+        {
+            "classname": "FlightBookingLink",
+            "code": "class FlightBookingLink(Base):\n    \"\"\"description: Intersects flights and bookings.\"\"\"\n\n    __tablename__ = 'flight_booking_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    flight_id = Column(Integer, ForeignKey('flight.id'), nullable=False)\n    booking_id = Column(Integer, ForeignKey('booking.id'), nullable=False)",
+            "description": "Intersects flights and bookings.",
+            "name": "FlightBookingLink"
+        },
+        {
+            "classname": "AirportFlightLink",
+            "code": "class AirportFlightLink(Base):\n    \"\"\"description: Intersects airports and flights.\"\"\"\n\n    __tablename__ = 'airport_flight_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    airport_id = Column(Integer, ForeignKey('airport.id'), nullable=False)\n    flight_id = Column(Integer, ForeignKey('flight.id'), nullable=False)",
+            "description": "Intersects airports and flights.",
+            "name": "AirportFlightLink"
+        },
+        {
+            "classname": "FlightPassengerLink",
+            "code": "class FlightPassengerLink(Base):\n    \"\"\"description: Intersects flights and passengers.\"\"\"\n\n    __tablename__ = 'flight_passenger_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    flight_id = Column(Integer, ForeignKey('flight.id'), nullable=False)\n    passenger_id = Column(Integer, ForeignKey('passenger.id'), nullable=False)",
+            "description": "Intersects flights and passengers.",
+            "name": "FlightPassengerLink"
+        },
+        {
+            "classname": "ActivityReviewLink",
+            "code": "class ActivityReviewLink(Base):\n    \"\"\"description: Intersects activities and reviews.\"\"\"\n\n    __tablename__ = 'activity_review_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    activity_id = Column(Integer, ForeignKey('activity.id'), nullable=False)\n    review_id = Column(Integer, ForeignKey('review.id'), nullable=False)",
+            "description": "Intersects activities and reviews.",
+            "name": "ActivityReviewLink"
+        }
+    ],
+    "rules": [],
+    "test_data": "# Holiday Test Data\nholiday1 = Holiday(name=\"Summer Getaway\", start_date=date(2023, 6, 1), end_date=date(2023, 6, 15), destination=\"Hawaii\")\nholiday2 = Holiday(name=\"Winter Wonderland\", start_date=date(2023, 12, 1), end_date=date(2023, 12, 10), destination=\"Switzerland\")\nholiday3 = Holiday(name=\"Autumn Retreat\", start_date=date(2023, 9, 20), end_date=date(2023, 9, 25), destination=\"Japan\")\nholiday4 = Holiday(name=\"Spring Escape\", start_date=date(2023, 3, 10), end_date=date(2023, 3, 20), destination=\"Australia\")\n\n# Activity Test Data\nactivity1 = Activity(name=\"Surfing Lesson\", holiday_id=holiday1.id, start_time=datetime(2023, 6, 3, 9, 0), end_time=datetime(2023, 6, 3, 11, 0), location=\"Waikiki Beach\")\nactivity2 = Activity(name=\"Snowboarding\", holiday_id=holiday2.id, start_time=datetime(2023, 12, 2, 10, 0), end_time=datetime(2023, 12, 2, 13, 0), location=\"Alps\")\nactivity3 = Activity(name=\"Cherry Blossom Viewing\", holiday_id=holiday3.id, start_time=datetime(2023, 9, 21, 15, 0), end_time=datetime(2023, 9, 21, 17, 0), location=\"Tokyo\")\nactivity4 = Activity(name=\"Great Barrier Reef Diving\", holiday_id=holiday4.id, start_time=datetime(2023, 3, 12, 9, 0), end_time=datetime(2023, 3, 12, 12, 0), location=\"Queensland\")\n\n# Review Test Data\nreview1 = Review(activity_id=activity1.id, review_text=\"Amazing experience!\", rating=5, review_date=date(2023, 6, 4))\nreview2 = Review(activity_id=activity2.id, review_text=\"Breathtaking views.\", rating=4, review_date=date(2023, 12, 3))\nreview3 = Review(activity_id=activity3.id, review_text=\"Beautiful scenery.\", rating=5, review_date=date(2023, 9, 22))\nreview4 = Review(activity_id=activity4.id, review_text=\"Spectacular dive.\", rating=5, review_date=date(2023, 3, 13))\n\n# Airport Test Data\nairport1 = Airport(code=\"HNL\", name=\"Daniel K. Inouye International Airport\", location=\"Honolulu, HI\")\nairport2 = Airport(code=\"ZRH\", name=\"Zurich Airport\", location=\"Zurich, Switzerland\")\nairport3 = Airport(code=\"NRT\", name=\"Narita International Airport\", location=\"Tokyo, Japan\")\nairport4 = Airport(code=\"SYD\", name=\"Sydney Airport\", location=\"Sydney, Australia\")\n\n# Flight Test Data\nflight1 = Flight(flight_number=\"HA123\", departure_time=datetime(2023, 6, 1, 14, 0), arrival_time=datetime(2023, 6, 1, 20, 0), departure_airport_id=airport1.id, arrival_airport_id=airport2.id, total_seats=250)\nflight2 = Flight(flight_number=\"SW321\", departure_time=datetime(2023, 12, 1, 16, 0), arrival_time=datetime(2023, 12, 1, 20, 0), departure_airport_id=airport2.id, arrival_airport_id=airport3.id, total_seats=200)\nflight3 = Flight(flight_number=\"JL200\", departure_time=datetime(2023, 9, 20, 10, 0), arrival_time=datetime(2023, 9, 20, 16, 0), departure_airport_id=airport3.id, arrival_airport_id=airport4.id, total_seats=180)\nflight4 = Flight(flight_number=\"QF400\", departure_time=datetime(2023, 3, 10, 12, 0), arrival_time=datetime(2023, 3, 10, 18, 0), departure_airport_id=airport4.id, arrival_airport_id=airport1.id, total_seats=220)\n\n# Booking Test Data\nbooking1 = Booking(flight_id=flight1.id, passenger_id=1, seat_number=\"12A\", booking_date=date(2023, 5, 1))\nbooking2 = Booking(flight_id=flight2.id, passenger_id=2, seat_number=\"8B\", booking_date=date(2023, 11, 2))\nbooking3 = Booking(flight_id=flight3.id, passenger_id=3, seat_number=\"20C\", booking_date=date(2023, 8, 15))\nbooking4 = Booking(flight_id=flight4.id, passenger_id=4, seat_number=\"15D\", booking_date=date(2023, 2, 25))\n\n# Passenger Test Data\npassenger1 = Passenger(name=\"John Doe\", date_of_birth=date(1980, 1, 1), passport_number=\"A1234567\", nationality=\"USA\")\npassenger2 = Passenger(name=\"Jane Smith\", date_of_birth=date(1990, 2, 15), passport_number=\"B7654321\", nationality=\"Canada\")\npassenger3 = Passenger(name=\"Emma Johnson\", date_of_birth=date(1985, 5, 23), passport_number=\"C8765432\", nationality=\"UK\")\npassenger4 = Passenger(name=\"Liam Brown\", date_of_birth=date(1995, 3, 30), passport_number=\"D1239876\", nationality=\"Australia\")",
+    "name": "HolidayFlightBookings"
+}

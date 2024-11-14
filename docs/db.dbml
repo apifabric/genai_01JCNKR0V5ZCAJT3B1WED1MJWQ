@@ -1,0 +1,88 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Activity: Represents activities planned in a holiday.
+Holiday: Represents holiday plans.
+Review: Stores reviews for activities.
+Airport: Represents airports managed by the system.
+Booking: Represents bookings for flights.
+Flight: Represents flights departing or arriving at airports.
+User: Stores details about users who plan holidays.
+Passenger: Represents passengers on a booked flight.
+'''
+}
+
+Table Activity {
+    id INTEGER [primary key]
+    name VARCHAR 
+    date DATE 
+    holiday_id INTEGER 
+    review_id INTEGER 
+    }
+
+Table Holiday {
+    id INTEGER [primary key]
+    name VARCHAR 
+    start_date DATE 
+    end_date DATE 
+    user_id INTEGER 
+    }
+
+Table Review {
+    id INTEGER [primary key]
+    rating INTEGER 
+    comment VARCHAR 
+    user_id INTEGER 
+    }
+
+Table Airport {
+    id INTEGER [primary key]
+    name VARCHAR 
+    city VARCHAR 
+    country VARCHAR 
+    }
+
+Table Booking {
+    id INTEGER [primary key]
+    booking_date DATETIME 
+    flight_id INTEGER 
+    user_id INTEGER 
+    }
+
+Table Flight {
+    id INTEGER [primary key]
+    departure_time DATETIME 
+    arrival_time DATETIME 
+    source_airport_id INTEGER 
+    destination_airport_id INTEGER 
+    }
+
+Table User {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    signup_date DATETIME 
+    }
+
+Table Passenger {
+    id INTEGER [primary key]
+    name VARCHAR 
+    age INTEGER 
+    booking_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: Activity.(holiday_id) < Holiday.(id)
+    Ref: Activity.(review_id) < Review.(id)
+    Ref: Holiday.(user_id) < User.(id)
+    Ref: Review.(user_id) < User.(id)
+    Ref: Booking.(flight_id) < Flight.(id)
+    Ref: Booking.(user_id) < User.(id)
+    Ref: Flight.(destination_airport_id) < Airport.(id)
+    Ref: Flight.(source_airport_id) < Airport.(id)
+    Ref: Passenger.(booking_id) < Booking.(id)

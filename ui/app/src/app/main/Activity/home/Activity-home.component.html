@@ -1,0 +1,53 @@
+<o-form-layout-manager attr="Activity" mode="tab" title="ACTIVITY">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ActivityTable" 
+            service="Activity" 
+            entity="Activity" 
+            title="ACTIVITY"
+            keys="id"
+            columns="name;holiday_id;review_id;date;id" 
+            header-actions="R;D"
+            visible-columns="name;holiday_id;review_id;date;id"  
+            sort-columns="name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #name attr="name" title=" name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="holiday_id" title="holiday_id">
+    <o-table-cell-renderer-service attr="holiday_id" 
+        service="Holiday" entity="HolidayType" columns="id;name"
+        parent-keys="id:holiday_id"
+        value-column="name" keys="holiday_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="review_id" title="review_id">
+    <o-table-cell-renderer-service attr="review_id" 
+        service="Review" entity="ReviewType" columns="id;id"
+        parent-keys="id:review_id"
+        value-column="id" keys="review_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #date attr="date" type="date" label="date" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

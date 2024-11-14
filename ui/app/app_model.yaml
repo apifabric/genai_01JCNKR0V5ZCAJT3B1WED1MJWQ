@@ -1,0 +1,390 @@
+about:
+  date: November 14, 2024 15:14:20
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Activity:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: holiday_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: review_id
+      template: integer
+      type: INTEGER
+    - name: date
+      type: DATE
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents activities planned in a holiday.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents activities planned in a holiday.
+    label: Activity
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - holiday_id
+      name: holiday
+      resource: Holiday
+    - direction: toone
+      fks:
+      - review_id
+      name: review
+      resource: Review
+    type: Activity
+  Airport:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: city
+      template: text
+      type: VARCHAR
+    - name: country
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents airports managed by the system.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents airports managed by the system.
+    label: Airport
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - destination_airport_id
+      name: FlightList
+      resource: Flight
+    - direction: tomany
+      fks:
+      - source_airport_id
+      name: sourceFlightList
+      resource: Flight
+    type: Airport
+  Booking:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: flight_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: booking_date
+      type: DATETIME
+    description: Represents bookings for flights.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents bookings for flights.
+    label: Booking
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - booking_id
+      name: PassengerList
+      resource: Passenger
+    - direction: toone
+      fks:
+      - flight_id
+      name: flight
+      resource: Flight
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Booking
+  Flight:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: destination_airport_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: source_airport_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: departure_time
+      type: DATETIME
+    - name: arrival_time
+      type: DATETIME
+    description: Represents flights departing or arriving at airports.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents flights departing or arriving at airports.
+    label: Flight
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - flight_id
+      name: BookingList
+      resource: Booking
+    - direction: toone
+      fks:
+      - destination_airport_id
+      name: destination_airport
+      resource: Airport
+    - direction: toone
+      fks:
+      - source_airport_id
+      name: source_airport
+      resource: Airport
+    type: Flight
+  Holiday:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: start_date
+      type: DATE
+    - name: end_date
+      type: DATE
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents holiday plans.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents holiday plans.
+    label: Holiday
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - holiday_id
+      name: ActivityList
+      resource: Activity
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Holiday
+  Passenger:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: booking_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: age
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents passengers on a booked flight.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents passengers on a booked flight.
+    label: Passenger
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - booking_id
+      name: booking
+      resource: Booking
+    type: Passenger
+  Review:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: rating
+      template: integer
+      type: INTEGER
+    - name: comment
+      template: text
+      type: VARCHAR
+    description: Stores reviews for activities.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Stores reviews for activities.
+    label: Review
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - review_id
+      name: ActivityList
+      resource: Activity
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Review
+  User:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: signup_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Stores details about users who plan holidays.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Stores details about users who plan holidays.
+    label: User
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: BookingList
+      resource: Booking
+    - direction: tomany
+      fks:
+      - user_id
+      name: HolidayList
+      resource: Holiday
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReviewList
+      resource: Review
+    type: User
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

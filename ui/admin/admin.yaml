@@ -1,0 +1,268 @@
+about:
+  date: November 14, 2024 15:14:20
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 9
+  number_tables: 8
+info_toggle_checked: true
+resources:
+  Activity:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: holiday_id
+      required: true
+    - name: review_id
+    - name: date
+      type: DATE
+    - name: id
+    description: Represents activities planned in a holiday.
+    info_list: Represents activities planned in a holiday.
+    tab_groups:
+    - direction: toone
+      fks:
+      - holiday_id
+      name: holiday
+      resource: Holiday
+    - direction: toone
+      fks:
+      - review_id
+      name: review
+      resource: Review
+    type: Activity
+    user_key: name
+  Airport:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: city
+    - name: country
+    - name: id
+    description: Represents airports managed by the system.
+    info_list: Represents airports managed by the system.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - destination_airport_id
+      name: FlightList
+      resource: Flight
+    - direction: tomany
+      fks:
+      - source_airport_id
+      name: sourceFlightList
+      resource: Flight
+    type: Airport
+    user_key: name
+  Booking:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: flight_id
+      required: true
+    - name: user_id
+      required: true
+    - name: booking_date
+      type: DATETIME
+    description: Represents bookings for flights.
+    info_list: Represents bookings for flights.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - booking_id
+      name: PassengerList
+      resource: Passenger
+    - direction: toone
+      fks:
+      - flight_id
+      name: flight
+      resource: Flight
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Booking
+    user_key: id
+  Flight:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: destination_airport_id
+      required: true
+    - name: source_airport_id
+      required: true
+    - name: departure_time
+      type: DATETIME
+    - name: arrival_time
+      type: DATETIME
+    description: Represents flights departing or arriving at airports.
+    info_list: Represents flights departing or arriving at airports.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - flight_id
+      name: BookingList
+      resource: Booking
+    - direction: toone
+      fks:
+      - destination_airport_id
+      name: destination_airport
+      resource: Airport
+    - direction: toone
+      fks:
+      - source_airport_id
+      name: source_airport
+      resource: Airport
+    type: Flight
+    user_key: id
+  Holiday:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: user_id
+      required: true
+    - name: start_date
+      type: DATE
+    - name: end_date
+      type: DATE
+    - name: id
+    description: Represents holiday plans.
+    info_list: Represents holiday plans.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - holiday_id
+      name: ActivityList
+      resource: Activity
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Holiday
+    user_key: name
+  Passenger:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: booking_id
+      required: true
+    - name: age
+    - name: id
+    description: Represents passengers on a booked flight.
+    info_list: Represents passengers on a booked flight.
+    tab_groups:
+    - direction: toone
+      fks:
+      - booking_id
+      name: booking
+      resource: Booking
+    type: Passenger
+    user_key: name
+  Review:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: user_id
+      required: true
+    - name: rating
+    - name: comment
+    description: Stores reviews for activities.
+    info_list: Stores reviews for activities.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - review_id
+      name: ActivityList
+      resource: Activity
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Review
+    user_key: id
+  User:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+      required: true
+    - name: signup_date
+      type: DATETIME
+    - name: id
+    description: Stores details about users who plan holidays.
+    info_list: Stores details about users who plan holidays.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: BookingList
+      resource: Booking
+    - direction: tomany
+      fks:
+      - user_id
+      name: HolidayList
+      resource: Holiday
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReviewList
+      resource: Review
+    type: User
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

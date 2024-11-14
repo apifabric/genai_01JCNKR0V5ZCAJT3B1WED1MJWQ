@@ -1,0 +1,53 @@
+<o-form-layout-manager attr="Flight" mode="tab" title="FLIGHT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="FlightTable" 
+            service="Flight" 
+            entity="Flight" 
+            title="FLIGHT"
+            keys="id"
+            columns="id;destination_airport_id;source_airport_id;departure_time;arrival_time" 
+            header-actions="R;D"
+            visible-columns="id;destination_airport_id;source_airport_id;departure_time;arrival_time"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="destination_airport_id" title="destination_airport_id">
+    <o-table-cell-renderer-service attr="destination_airport_id" 
+        service="Airport" entity="AirportType" columns="id;name"
+        parent-keys="id:destination_airport_id"
+        value-column="name" keys="destination_airport_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="source_airport_id" title="source_airport_id">
+    <o-table-cell-renderer-service attr="source_airport_id" 
+        service="Airport" entity="AirportType" columns="id;name"
+        parent-keys="id:source_airport_id"
+        value-column="name" keys="source_airport_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #departure_time attr="departure_time" title="departure_time" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #arrival_time attr="arrival_time" title="arrival_time" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>
